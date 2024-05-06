@@ -1,0 +1,16 @@
+.contact-table {
+  max-width: 60rem;
+  margin: 20px;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.contact-table th, .contact-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.contact-table th {
+  background-color: #f2f2f2;
+}
