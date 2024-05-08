@@ -14,15 +14,19 @@ namespace ContactsAPI.Controllers
     public class ContactController : Controller
     {
         private readonly IContactService _contactService;
-        public ContactController(IContactService contactService) {
+        public ContactController(IContactService contactService)
+        {
             _contactService = contactService;
         }
 
         // GET: api/<controller>
         [HttpGet]
-        public ActionResult<IEnumerable<Contact>> Get()
+        public ActionResult<IEnumerable<Contact>> Get(
+            [FromQuery] int page = 1,
+            [FromQuery] int pageSize = 10,
+            [FromQuery] string search = "")
         {
-            var result  = _contactService.GetAllContacts();
+            var result = _contactService.GetAllContacts(page, pageSize, search);
             return result;
         }
 
@@ -36,7 +40,7 @@ namespace ContactsAPI.Controllers
 
         // POST api/<controller>
         [HttpPost]
-        public ActionResult<Contact> Post([FromBody]Contact contact)
+        public ActionResult<Contact> Post([FromBody] Contact contact)
         {
             var result = _contactService.CreateContact(contact);
             return result;
@@ -44,7 +48,7 @@ namespace ContactsAPI.Controllers
 
         // PUT api/<controller>/5
         [HttpPut("{id}")]
-        public ActionResult<Contact> Put(int id, Contact contact)
+        public ActionResult<Contact> Put(int id, [FromBody] Contact contact)
         {
             var result = _contactService.UpdateContact(id, contact);
             return result;

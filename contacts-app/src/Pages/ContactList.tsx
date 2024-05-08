@@ -26,6 +26,8 @@ const ContactList: React.FC = () => {
     }, []);
 
     const handleFormSubmit = async (contact: Contact) => {
+      console.log("contact", contact);
+      console.log("editContact", editContact);
         try {
           let response;
           if (editContact) {

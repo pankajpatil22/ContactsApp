@@ -41,9 +41,24 @@ public class ContactService : IContactService
         _context.SaveChanges();
     }
 
-    public List<Contact> GetAllContacts()
+    public List<Contact> GetAllContacts(int page, int pageSize, string search)
     {
-        return _context.Contacts.ToList();
+        IQueryable<Contact> query = _context.Contacts;
+
+        // Apply search filter if search term is provided
+        if (!string.IsNullOrEmpty(search))
+        {
+            query = query.Where(c =>
+                c.FirstName.Contains(search) ||
+                c.LastName.Contains(search) ||
+                c.Email.Contains(search) ||
+                c.PhoneNumber.Contains(search));
+        }
+
+        // Apply pagination
+        query = query.Skip((page - 1) * pageSize).Take(pageSize);
+
+        return query.ToList();
     }
 
     public Contact GetContactById(int id)
